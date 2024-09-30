@@ -32,7 +32,9 @@ lastfivelc
 lc15_to_24 <- letters[15:24]
 
 lc15_to_24
+```
 
+```{r}
 # 2
 # a
 city <- c("Tuguegarao City", "Manila", "Iloilo City", "Tacloban", "Samal Island", "Davao City")
