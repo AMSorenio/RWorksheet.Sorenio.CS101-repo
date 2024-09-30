@@ -3,8 +3,7 @@ title: "RWorksheet_Sorenio#3a.Rmd"
 output: pdf_document
 date: "2024-09-30"
 ---
-```{r sorenio, echo=FALSE}
-```
+```{r}
 # Using Vectors
 
 # 1. There is a built-in vector LETTERS contains the uppercase letters of the alphabet and letters which contains the lowercase letters of the alphabet.
@@ -16,6 +15,7 @@ II_letters
 
 # b
 odd <- LETTERS[seq(1, 26, by = 2)]
+
 odd
 
 # c
@@ -52,7 +52,7 @@ ct
 # d
 names(ct) <- c("City", "Temperature")
 
-ct
+names (ct)
 
 # e
 str(ct)
@@ -60,13 +60,11 @@ str(ct)
 # f
 ct[3:4, ]
 
-ct
-
 # g
 ct[which.max(ct$Temperature), ]
+```
 
-ct
-
+```{r}
 # Using Matrices
 # 2
 # a
@@ -102,6 +100,10 @@ dim(mat) <- c(6, 2)
 
 mat
 
+```
+
+```{r}
+
 # Using Arrays
 # 3
 # a
@@ -118,3 +120,4 @@ dim(array_3d)
 dimnames(array_3d) <- list(c("a", "b"), c("A", "B", "C", "D"), c("1st-Dimensional Array", "2nd-Dimensional Array", "3rd-Dimensional Array"))
 
 array_3d
+```
