@@ -1,0 +1,120 @@
+---
+title: "RWorksheet_Sorenio#3a.Rmd"
+output: pdf_document
+date: "2024-09-30"
+---
+```{r sorenio, echo=FALSE}
+```
+# Using Vectors
+
+# 1. There is a built-in vector LETTERS contains the uppercase letters of the alphabet and letters which contains the lowercase letters of the alphabet.
+
+# a
+II_letters <- LETTERS[1:11]
+
+II_letters
+
+# b
+odd <- LETTERS[seq(1, 26, by = 2)]
+odd
+
+# c
+vowels <- LETTERS[c(1, 5, 9, 15, 21)]
+
+vowels
+
+# d
+lastfivelc <- letters[22:26]
+
+lastfivelc
+
+# e
+lc15_to_24 <- letters[15:24]
+
+lc15_to_24
+
+# 2
+# a
+city <- c("Tuguegarao City", "Manila", "Iloilo City", "Tacloban", "Samal Island", "Davao City")
+
+city
+
+# b
+temp <- c(42, 39, 34, 34, 30, 27)
+
+temp
+
+# c
+ct <- data.frame(city, temp)
+
+ct
+
+# d
+names(ct) <- c("City", "Temperature")
+
+ct
+
+# e
+str(ct)
+
+# f
+ct[3:4, ]
+
+ct
+
+# g
+ct[which.max(ct$Temperature), ]
+
+ct
+
+# Using Matrices
+# 2
+# a
+mat <- matrix(c(1:8, 11:14), nrow = 3, ncol = 4)
+
+mat
+
+# b
+mattimes <- mat * 2
+
+mattimes
+
+# c
+mat[2, ]
+
+# d
+mat[1:2, 3:4]
+
+# e
+mat[3, 2:3]
+
+# f
+mat[, 4]
+
+# g
+rownames(mattimes) <- c("isa", "dalawa", "tatlo")
+colnames(mattimes) <- c("uno", "dos", "tres", "quatro")
+
+mattimes
+
+# h
+dim(mat) <- c(6, 2)
+
+mat
+
+# Using Arrays
+# 3
+# a
+nvalues <- rep(c(1, 2, 3, 6, 7, 8, 9, 0, 3, 4, 5, 1), times = 2)
+
+array_3d <- array(nvalues, dim = c(2, 4, 3))
+
+array_3d
+
+# b. To check how many dimensions the array have
+dim(array_3d)
+
+# c
+dimnames(array_3d) <- list(c("a", "b"), c("A", "B", "C", "D"), c("1st-Dimensional Array", "2nd-Dimensional Array", "3rd-Dimensional Array"))
+
+array_3d
