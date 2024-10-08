@@ -1,0 +1,138 @@
+---
+title: RWorksheet_Sorenio#3b.Rmd
+output: pdf_document
+date: "2024-10-03"
+---
+
+```{r}
+
+# 1.a
+
+Respondents <- 1:20
+
+Sex <- c(2,2,1,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,1,2)
+
+Fathers_Occupation <-c(1,3,3,3,1,2,3,1,1,1,3,2,1,3,3,1,3,1,2,1)
+
+Persons_at_home <- c(5,7,3,8,5,9,6,7,8,4,7,5,4,7,8,8,3,11,7,6)
+
+Siblings_at_school <- c(6,4,4,1,2,1,5,3,1,2,3,2,5,5,2,1,2,5,3,2)
+
+Types_of_houses <- c(1, 2, 3, 1, 1, 3, 3, 1, 2, 3, 2, 3, 2, 2, 3, 3, 3, 3, 3, 2)
+
+df <- data.frame(Respondents = Respondents, Sex = Sex, Fathers_Occupation = Fathers_Occupation, Persons_at_home = Persons_at_home, Siblings_at_school = Siblings_at_school, Types_of_houses = Types_of_houses)
+
+print(df)
+
+# b 
+# The data includes information from 20 people about their families and homes. Most respondents are female, and their fathers work as farmers, drivers, or have other jobs, with most fathers in the "other" category. The number of people living in each home ranges from 3 to 11, and most respondents have 2 to 5 siblings in school. The types of houses they live in are either made of wood, semi-concrete, or concrete, with most living in concrete or semi-concrete homes. The data gives a simple picture of their family size, house type, and their fathers' jobs.
+
+summary(df)
+
+str(df)
+
+# c
+# The mean of the number of siblings is 2.95 and not 5.
+
+meansibs <- mean(df$Siblings_at_school)
+
+print(meansibs)
+
+# d
+
+subsetdf <- df[1:2, ]
+
+print(subsetdf)
+
+# e
+
+subsetdf_2 <- df[c(3, 5), c(2, 4)]
+
+print(subsetdf_2)
+
+# f
+
+typeshouses <- df$Types_of_houses
+
+print(typeshouses)
+
+# g
+
+maleF <- subset(df, Sex == 1 & Fathers_Occupation == 1)
+
+print(maleF)
+
+# h
+
+femsibs <- subset(df, Sex == 2 & Siblings_at_school >= 5)
+
+print(femsibs)
+```
+
+``` {r}
+# 2
+df <- data.frame(Ints=integer(),
+                 Doubles=double(), 
+                 Characters=character(), 
+                 Logicals=logical(), 
+                 Factors=factor(), 
+                 stringsAsFactors=FALSE)
+
+print("Structure of the empty dataframe:")
+
+print(str(df))
+# a
+# An empty data frame w/ 5 columns for integers, decimal, text, and for true or false value. There are no rows or data in the frame, and the category column has no defined options yet. It’s just the structure of a data frame, but no actual data has been added
+```
+
+```{r}
+# 3
+respondents <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+sex <- c("Male", "Female", "Female", "Male", "Male", "Female", "Female", "Male", "Female", "Male")
+fatherOccu <- c(1, 2, 3, 3, 1, 2, 2, 3, 1, 3)
+personAH <- c(5, 7, 3, 8, 6, 4, 4, 2, 11, 6)
+sibs <- c(2, 3, 0, 5, 2, 3, 1, 2, 6, 2)
+typehouses <- c("Wood", "Congrete", "Congrete", "Wood", "Semi-congrete", "Semi-congrete", "Wood", "Semi-congrete", "Semi-congrete", "Congrete")
+
+HHdata <- data.frame(Respondents = respondents, Sex = sex, Fathers_Occupation = fatherOccu, Persons_at_Home = personAH, Siblings_at_School = sibs, Types_of_Houses = typehouses)
+HHdata
+
+write.csv(HHdata, file = "HouseholdData.csv", FALSE)
+# a
+import <- read.csv("HouseholdData.csv")
+import 
+
+# b
+HHdata$Sex <- factor(HHdata$Sex, levels = c("Male", "Female"), labels = c(1, 2))
+
+print(HHdata)
+
+# c
+HHdata$Types_of_Houses <- factor(HHdata$Types_of_Houses, levels = c("Wood", "Congrete", "Semi-congrete"), labels = c(1, 2, 3))
+
+print(HHdata)
+
+# hhdata from first part
+HHdata <- read.csv("HouseholdData.csv")
+
+print(HHdata)
+
+# d
+HHdata$Fathers_Occupation <- factor(HHdata$Fathers_Occupation, 
+                                     levels = c(1, 2, 3), 
+                                     labels = c("Farmer", "Driver", "Others"))
+
+print(HHdata)
+
+# e
+female_drivers <- subset(HHdata, Sex == "Female" & Fathers_Occupation == "Driver")
+
+print(female_drivers)
+
+# f
+sibling_filter <- subset(HHdata, Siblings_at_School >= 5)
+
+
+print(sibling_filter)
+```
+# 4. The graph is all about the sentiments of tweets: Negative in red color, Neutral in orange color, Positive in blue color. Some days (July 15 and 21) had many negative tweets , while other days had more positive or neutral feelings. This suggests that people’s opinions were mixed and changed based on events happening during that week and it mirrors their tweets. 
