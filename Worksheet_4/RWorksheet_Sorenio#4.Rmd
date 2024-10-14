@@ -1,0 +1,95 @@
+---
+title: "RWorksheet_Sorenio#4.Rmd"
+output: pdf_document
+date: "2024-10-14"
+---
+
+```{r}
+# 1
+shoedata <- data.frame(
+  ShoeSize = c(6.5, 9.0, 8.5, 8.5, 10.5, 7.0, 9.0, 9.0, 7.5, 10.5, 8.5, 10.5, 10.5, 8.5, 10.5, 13.0, 11.5, 8.5, 7.0, 6.5, 8.5, 9.0, 8.5, 11.0, 13.0),
+  Height = c(66.0, 68.0, 64.5, 65.0, 72.0, 64.0, 71.0, 71.0, 64.0, 74.5, 67.0, 71.0, 77.0, 72.0, 59.0, 72.0, 72.0, 77.0, 66.0, 73.0, 67.0, 67.0, 69.0, 71.0, 70.0),
+  Gender = c("F", "F", "F", "F", "F", "M", "M", "M", "F", "F", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M")
+)
+
+shoedata
+
+# a. Describe the data.
+# The data includes shoe size, height, and gender for 25 people. Shoe sizes range from 6.5 to 13, heights from 59 to 77 inches, with 9 females and 16 males. It helps to explore averages and any link between height and shoe size.
+
+# b
+MALE <- subset(shoedata, Gender == "M")
+
+FEMALE <- subset(shoedata, Gender == "F")
+
+print("Male Data:")
+
+print(MALE)
+
+print("Female Data:")
+
+print(FEMALE)
+
+# c
+MEANSHOE <- mean(shoedata$ShoeSize)
+
+MEANH <- mean(shoedata$Height)
+
+print(paste("Mean Shoe Size:", MEANSHOE))
+
+print(paste("Mean Height:", MEANH))
+
+# d
+relation <- cor(shoedata$ShoeSize, shoedata$Height)
+
+print(paste("Correlation between Shoe Size and Height:", relation))
+```
+```{r}
+# 2
+MONTHS <- c(
+  "March", "April", "January", "November", "January", "September", "October",
+  "September", "November", "August", "January", "November", "November", 
+  "February", "May", "August", "July", "December", "August", "August", 
+  "September", "November", "February", "April"
+)
+
+factor_months_vector <- factor(MONTHS)
+
+print(factor_months_vector)
+```
+```{r}
+# 3
+print("Summary of months_vector (character vector):")
+
+summary(MONTHS)
+
+print("Summary of factor_months_vector:")
+
+summary(factor_months_vector)
+
+# The character vector just tells us the total number of months in the data, but it doesn’t show how many times each month appears. On the other hand, the summary of the factor vector is much more useful. It tells us exactly how often each month appears in the data. So, using a factor is better because it helps us see the distribution of the months more clearly, making it easier to analyze.
+
+```
+```{r}
+# 4
+
+direction_data <- c("East", "West", "North")
+
+frequency_data <- c(1, 4, 3)
+
+new_order_data <- factor(direction_data, levels = c("East", "West", "North"))
+
+print(new_order_data)
+```
+```{r}
+# 5
+# a
+exceldata <- read.table("import_march.csv", header = TRUE, sep = ",")
+
+View(exceldata)
+
+# b
+print(exceldata)
+
+View(exceldata)
+```
