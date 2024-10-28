@@ -23,47 +23,47 @@ Types_of_houses <- c(1, 2, 3, 1, 1, 3, 3, 1, 2, 3, 2, 3, 2, 2, 3, 3, 3, 3, 3, 2)
 df <- data.frame(Respondents = Respondents, Sex = Sex, Fathers_Occupation = Fathers_Occupation, Persons_at_home = Persons_at_home, Siblings_at_school = Siblings_at_school, Types_of_houses = Types_of_houses)
 
 print(df)
-
+```
 # b 
 # The data includes information from 20 people about their families and homes. Most respondents are female, and their fathers work as farmers, drivers, or have other jobs, with most fathers in the "other" category. The number of people living in each home ranges from 3 to 11, and most respondents have 2 to 5 siblings in school. The types of houses they live in are either made of wood, semi-concrete, or concrete, with most living in concrete or semi-concrete homes. The data gives a simple picture of their family size, house type, and their fathers' jobs.
-
+```{r}
 summary(df)
 
 str(df)
-
+```
 # c
 # The mean of the number of siblings is 2.95 and not 5.
-
+```{r}
 meansibs <- mean(df$Siblings_at_school)
 
 print(meansibs)
-
+```
 # d
-
+```{r}
 subsetdf <- df[1:2, ]
 
 print(subsetdf)
-
+```
 # e
-
+```{r}
 subsetdf_2 <- df[c(3, 5), c(2, 4)]
 
 print(subsetdf_2)
-
+```
 # f
-
+```{r}
 typeshouses <- df$Types_of_houses
 
 print(typeshouses)
-
+```
 # g
-
+```{r}
 maleF <- subset(df, Sex == 1 & Fathers_Occupation == 1)
 
 print(maleF)
-
+```
 # h
-
+```{r}
 femsibs <- subset(df, Sex == 2 & Siblings_at_school >= 5)
 
 print(femsibs)

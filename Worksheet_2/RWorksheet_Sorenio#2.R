@@ -31,12 +31,8 @@ date: "2024-09-26"
   # b
   ages[c(2, 4)]
   
-  ages
-  
   # c
   ages[-c(4, 12)]
-  
-  ages
   
   # 4.Create a vector x <- c("first"=3, "second"=0, "third"=9). Then named the vector, names(x).
   
@@ -45,6 +41,7 @@ date: "2024-09-26"
   # 5.	Create a sequence x from -3:2.
   x <- -3:2
   
+  x
   # a
   x[2] <- 0
   
@@ -106,9 +103,10 @@ date: "2024-09-26"
   ranks_subset
   
   # 9. a
+  library(readxl)
+  
   file_path <- "C:/Users/User/Downloads/hotels-vienna.xlsx"
   hotels_data <- read_excel(file_path)
-  
   head(hotels_data)
   
   # b
