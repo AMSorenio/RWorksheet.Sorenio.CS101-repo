@@ -1,0 +1,38 @@
+---
+title: "RWorksheet_Sorenio#4c"
+output: pdf_document
+date: "2024-11-04"
+---
+
+```{r}
+# 1a
+library(readr)
+mpg <- read.csv("C:/Users/User/Downloads/mpg.csv")
+str(mpg)
+
+# 1b
+#The categorical variables in the mpg dataset are manufacturer, model, trans, drv, fl, and class.
+
+
+# 1c
+#The continuous variables in the mpg dataset are displ, cty, and hwy.
+
+```
+```{r}
+# 2
+# Manufacturer that has most models
+
+manufacturer_model_count <- table(mpg$manufacturer)
+most_models <- names(which.max(manufacturer_model_count))
+most_models_count <- max(manufacturer_model_count)
+
+# Model that has most variations
+model_counts <- table(mpg$model)
+most_variations_model <- names(which.max(model_counts))
+most_variations_count <- max(model_counts)
+
+most_models
+most_models_count
+most_variations_model
+most_variations_count
+```

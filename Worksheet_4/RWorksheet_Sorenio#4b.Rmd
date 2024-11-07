@@ -35,15 +35,16 @@ start2 <- as.integer(readline(prompt="Enter the second number of the Fibonacci s
 fibonacci <- c(start1, start2)
 repeat {
   next_value <- tail(fibonacci, 2)[1] + tail(fibonacci, 2)[2]
-  if (next_value > 500) break
+  if (is.na(next_value) || next_value > 500) break
   fibonacci <- c(fibonacci, next_value)
 }
 print(fibonacci)
 ```
 ```{r}
 # 4
-data <- read_csv("C:/Users/User/Documents/sample_data.csv")
+library(readr)
 
+data <- read_csv("C:/Users/User/Documents/sample_data.csv", show_col_types = FALSE)
 data
 ```
 ```{r}
@@ -148,8 +149,76 @@ alexa_data <- read_excel("C:\\Users\\User\\Downloads\\alexa_file.xlsx")
 alexa_data
 ```
 
+```{r}
+# 7. a
 
+alexa_data$variation <- gsub("Black\\s+", "Black", alexa_data$variation)
+alexa_data$variation <- gsub("White\\s+", "White", alexa_data$variation)
+```
 
+```{r}
+# 7. b
+
+library(dplyr)
+
+variationCount <- alexa_data %>% count(variation)
+save(variationCount, file = "variations.RData")
+
+```
+
+```{r}
+# 7. c
+
+load("variations.RData")
+barplot(variationCount$n, names.arg = variationCount$variation, col = "skyblue", main = "Alexa Variant Distribution", xlab = "Variant", ylab = "Count")
+```
+
+```{r}
+# 7.d
+
+variantCount <- alexa_data %>%
+  group_by(variation) %>%
+  summarize(count = n())
+```
+
+```{r}
+black_variants <- variantCount %>% 
+  filter(grepl("Black", variation))
+white_variants <- variantCount %>% 
+  filter(grepl("White", variation))
+
+print(black_variants)
+print(white_variants)
+```
+
+```{r}
+library(ggplot2)
+
+black_plot <- ggplot(black_variants, aes(x = variation, y = count, fill = variation)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Black Variants", x = "Values", y = "Total Numbers") +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  scale_fill_manual(values = c("black", "red", "green", "blue", "cyan"))
+
+print(black_plot)
+```
+
+```{r}
+white_plot <- ggplot(white_variants, aes(x = variation, y = count, fill = variation)) +
+  geom_bar(stat = "identity") +
+  labs(title = "White Variants", x = "Values", y = "Total Numbers") +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  scale_fill_manual(values = c("black", "red", "green", "blue", "cyan"))
+
+print(white_plot)
+```
+
+```{r}
+library(gridExtra)
+grid.arrange(black_plot, white_plot, ncol = 2)
+```
 
 
 
