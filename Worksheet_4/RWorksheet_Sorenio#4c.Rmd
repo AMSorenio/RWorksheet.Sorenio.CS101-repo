@@ -10,29 +10,211 @@ library(readr)
 mpg <- read.csv("C:/Users/User/Downloads/mpg.csv")
 str(mpg)
 
-# 1b
-#The categorical variables in the mpg dataset are manufacturer, model, trans, drv, fl, and class.
+# 1b Categorical Variables
+#The manufacturer, model, trans, drv, fl, and class.
 
-
-# 1c
-#The continuous variables in the mpg dataset are displ, cty, and hwy.
+# 1c Continuous Variables
+#The displ, cty, and hwy.
 
 ```
+
 ```{r}
 # 2
 # Manufacturer that has most models
 
-manufacturer_model_count <- table(mpg$manufacturer)
-most_models <- names(which.max(manufacturer_model_count))
-most_models_count <- max(manufacturer_model_count)
+# 2a
+library(dplyr)
+manufacturerMod <- mpg
+manufacturerMod <- aggregate(model ~ manufacturer, data = manufacturerMod, FUN = function(x) length(unique(x)))
+manufacturerMod <- manufacturerMod[order(-manufacturerMod$model), ]
+manufacturerMod
 
-# Model that has most variations
-model_counts <- table(mpg$model)
-most_variations_model <- names(which.max(model_counts))
-most_variations_count <- max(model_counts)
 
-most_models
-most_models_count
-most_variations_model
-most_variations_count
+# 2b
+manufacturerMod$manufacturer <- as.factor(manufacturerMod$manufacturer)
+
+library(ggplot2)
+plot(manufacturerMod$manufacturer, manufacturerMod$model,
+     main = "No. of Models by Manufacturer",
+     xlab = "Manufacturer",
+     ylab = "No. of Models")
 ```
+
+
+```{r}
+# 2
+ggplot(mpg, aes(model, manufacturer)) + geom_point()
+
+# 2a. What does ggplot(mpg, aes(model, manufacturer)) + geom_point() show?
+
+# The distribution of each car model in different manufacturers. 
+
+# 2b. For you, is it useful? If not, how could you modify the data to make it more informative?
+
+# The graph is useful, however, improvement  is reccomended. It can be better with the help of proper use of colors, added legend, clear representation and direct graphing. 
+``` 
+# 3. 
+
+```{r}
+top20 <- head(mpg, 20)
+ggplot(top20, aes(x = model, y = year)) + geom_point() + ggtitle("Model and Year (Top 20)")
+```
+
+# 4. 
+```{r}
+modelC <- mpg %>% group_by(model) %>% summarize(count = n()) %>% arrange(desc(count))
+modelC
+```
+# a. Plot using geom_bar() using the top 20 observations only. The graphs shoudl have a title, labels and colors. Show code and results.
+
+```{r}
+top20Mod <- modelC %>% head(20)
+
+ggplot(top20Mod, aes(x = reorder(model, count), y = count, fill = model)) +
+  geom_bar(stat="identity") +
+  labs(title = "Top 20 Models by Number of Cars", x = "Model", y = "No. of Cars") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_fill_viridis_d(aesthetics = "lightgreen")
+```
+# b. Plot using the geom_bar() + coord_flip() just like what is shown below. Show codes and its result.
+
+```{r}
+ggplot(top20Mod, aes(x = reorder(model, count), y = count, fill = model)) +
+  geom_bar(stat="identity") +
+  labs(title = "Top 20 Models by No. of Cars", x = "Model", y = "No. of Cars") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_fill_viridis_d(aesthetics = "blue") +
+  coord_flip()
+```
+
+# 5. Plot the relationship between cyl - number of cylinders and displ - engine displacement using geom_point with aesthetic color = engine displacement. Title should be “Relationship between No. of Cylinders and Engine Displacement”.
+
+# a. 
+
+```{r}
+ggplot(mpg, aes(x = cyl, y = displ, color = displ)) +
+  geom_point() +
+  labs(title = "Relationship between No. of Cylinders and Engine Displacement",
+    x = "Number of Cylinders",
+    y = "Engine Displacement"
+  ) +
+  theme_minimal()
+```
+
+# If the displacement increases, the number of cylinders also increases.
+
+# 6. Plot the relationship between displ (engine displacement) and hwy(highway miles per gallon). Mapped it with a continuous variable you have identified in #1-c. What is its result? Why it produced such output?
+
+```{r}
+ggplot(mpg, aes(x = displ, y = hwy, color = year)) +
+  geom_point() +
+  labs(
+    title = "Relationship between Engine Displacement and Highway MPG",
+    x = "Engine Displacement (displ)",
+    y = "Highway Miles per Gallon (hwy)"
+  ) +
+  theme_minimal()
+```
+
+# The result is displaying a scatter plot of engine displacement vs highway miles per gallon, the points in colors are according to the manufacturing year of the car.
+
+# As the engine displacement (displ) increases, fuel efficiency (hwy) decreases. This results in a downward slope of the points. Assigning the year variable to color might highlight subtle trends in fuel efficiency improvements over time.
+
+# 6. Import the traffic.csv onto your R environment.
+# a.
+
+```{r}
+traff <- read.csv("C:/Users/User/Downloads/traffic.csv")
+str(traff)
+```
+# b.
+
+```{r}
+junction <- subset(traff, select = Junction)
+head(junction)
+tail(junction)
+```
+
+# c. 
+
+```{r}
+library(ggplot2)
+ggplot(traff, aes(x = DateTime, y = Vehicles, color = Junction)) +
+  geom_line() +
+  labs(title = "Traffic Counts by Junction", x = "Date & Time", y = "Vehicles")
+```
+
+7. 
+
+```{r}
+library("readxl")
+alexa <- read_xlsx("C:/Users/User/Downloads/alexa_file.xlsx")
+alexa
+```
+
+# a. 
+
+```{r}
+nrow(alexa)
+ncol(alexa)
+```
+# It has a total of 3150 observations and 5 columns. 
+
+# b.
+
+```{r}
+library(dplyr)
+variationTotal <- alexa %>%
+  group_by(variation) %>%
+  summarize(total = n())
+print(variationTotal)
+```
+c. 
+
+```{r}
+ggplot(variationTotal, aes(x = variation, y = total, fill = variation)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Total Variations", x = "Variation", y = "Total") +
+  theme_minimal()
+
+```
+
+# The chart shows the total counts of different "Variations," with some being much more common than others. The Black Dot variation, shown by the tallest orange bar, has over 500 instances, making it the most popular. Overall, the chart highlights a big difference in how often each variation is chosen, with some being favored much more than others.
+
+# d.
+```{r}
+library(dplyr)
+no_of_verified_reviews <- alexa %>%
+  group_by(date) %>%
+  summarize(count = n(
+  )) %>%
+  arrange(date)
+```
+
+```{r}
+library(ggplot2)
+ggplot(no_of_verified_reviews, aes(x = date, y = count)) +
+  geom_line(color = "red") +
+  labs(title = "Verified Reviews Over Time", x = "Date", y = "Verified Reviews") +
+  theme_minimal()
+```
+
+# e.
+
+```{r}
+variationRating <- alexa %>%
+  group_by(variation) %>%
+  summarize(avg_rating = mean(rating, na.rm = TRUE)) %>%
+  arrange(desc(avg_rating))
+print(variationRating)
+```
+```{r}
+ggplot(variationRating, aes(x = reorder(variation, avg_rating), y = avg_rating, fill = variation)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Average Ratings by Variation", x = "Variation", y = "Average Rating") +
+  coord_flip()
+```
+
+# Highest ratings are Walnut Finish, Oak Finish, and Charcoal Fabric.
